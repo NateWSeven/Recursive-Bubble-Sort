@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Sort Visualization - Recursive with User Input</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        #arrayContainer {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 200px;
+        }
+
+        .bar {
+            width: 30px;
+            margin: 0 5px;
+            background-color: tomato;
+            text-align: center;
+            color: white;
+        }
+
+        input {
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Bubble Sort Visualization - Recursive</h2>
+
+<!-- Input for User to Define the Array -->
+<input id="userInput" type="text" placeholder="Enter numbers separated by commas">
+<button onclick="getUserArray()">Set Array</button>
+<button onclick="recursiveBubbleSort()">Sort Array</button>
+
+<div id="arrayContainer"></div>
+
+<script>
+    // Global array that will be updated by user input
+    let array = [];
+
+    // Function to get user-defined array
+    function getUserArray() {
+        const input = document.getElementById('userInput').value;
+        array = input.split(',').map(Number);  // Convert input string to array of numbers
+        renderArray(array);
+    }
+
+    // Function to render the array visually
+    function renderArray(arr) {
+        const container = document.getElementById("arrayContainer");
+        container.innerHTML = '';
+        arr.forEach(value => {
+            const bar = document.createElement('div');
+            bar.classList.add('bar');
+            bar.style.height = `${value * 3}px`;
+            bar.innerHTML = value;
+            container.appendChild(bar);
+        });
+    }
+
+    // Recursive Bubble Sort Function
+    function recursiveBubbleSort(n = array.length) {
+        if (n == 1) return;
+
+        let swapped = false;
+        for (let i = 0; i < n - 1; i++) {
+            if (array[i] > array[i + 1]) {
+                let temp = array[i];
+                array[i] = array[i + 1];
+                array[i + 1] = temp;
+                swapped = true;
+            }
+        }
+
+        renderArray(array);
+
+        // Recursive call after rendering
+        setTimeout(() => {
+            if (swapped) recursiveBubbleSort(n - 1);
+        }, 500);
+    }
+</script>
+
+</body>
+</html>
